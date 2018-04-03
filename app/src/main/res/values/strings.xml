@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ciph</string>
+    <string name="label_message">Message</string>
+    <string name="label_cipher">CIPHER</string>
 </resources>
