@@ -2,4 +2,5 @@
     <string name="app_name">ciph</string>
     <string name="label_message">Message</string>
     <string name="label_cipher">CIPHER</string>
+    <string name="error_empty">Message empty</string>
 </resources>

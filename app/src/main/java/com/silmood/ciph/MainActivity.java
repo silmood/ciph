@@ -17,9 +17,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String message  = ((EditText)findViewById(R.id.input_message)).getText().toString();
-                Cipher cipher = new Cipher();
-                String output = cipher.rot13(message);
-                ((TextView)findViewById(R.id.label_output)).setText(output);
+
+                if (message.isEmpty()){
+                    ((EditText)findViewById(R.id.input_message)).setError(getString(R.string.error_empty));
+                } else {
+                    Cipher cipher = new Cipher();
+                    String output = cipher.rot13(message);
+                    ((TextView) findViewById(R.id.label_output)).setText(output);
+                }
             }
         });
     }
