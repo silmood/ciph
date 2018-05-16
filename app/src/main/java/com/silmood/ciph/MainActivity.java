@@ -10,13 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RemoteDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dataSource = new RemoteDataSourceImpl();
     }
 
     private void setResult(String output) {
@@ -24,15 +29,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cipher(View view) {
-        String message  = getInputMessage();
+        String message = getInputMessage();
 
-        String result = Cipher.rot13(message);
-        setResult(result);
+        dataSource.cipher(message, new RemoteDataSource.Callback() {
+            @Override
+            public void onSuccess(String result) {
+                setResult(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(MainActivity.this,
+                        e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @NonNull
     private String getInputMessage() {
-        return ((EditText)findViewById(R.id.input_message)).getText().toString();
+        return ((EditText) findViewById(R.id.input_message)).getText().toString();
     }
 
     @Override
