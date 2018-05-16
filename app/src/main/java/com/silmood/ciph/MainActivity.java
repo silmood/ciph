@@ -30,12 +30,21 @@ public class MainActivity extends AppCompatActivity implements CipherView {
 
     public void cipher(View view) {
         String message = getInputMessage();
-        presenter.cipher(message);
+
+        if (message.isEmpty()) {
+            setMessageError(getString(R.string.error_empty));
+        } else {
+            presenter.cipher(message);
+        }
     }
 
     @NonNull
     private String getInputMessage() {
         return ((EditText) findViewById(R.id.input_message)).getText().toString();
+    }
+
+    private void setMessageError(String error) {
+        ((EditText) findViewById(R.id.input_message)).setError(error);
     }
 
     @Override
