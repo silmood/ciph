@@ -12,16 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CipherView {
 
-    private RemoteDataSource dataSource;
+    private CipherPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dataSource = new RemoteDataSourceImpl();
+        presenter = new CipherPresenter(new RemoteDataSourceImpl(), this);
     }
 
     private void setResult(String output) {
@@ -30,20 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void cipher(View view) {
         String message = getInputMessage();
-
-        dataSource.cipher(message, new RemoteDataSource.Callback() {
-            @Override
-            public void onSuccess(String result) {
-                setResult(result);
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Toast.makeText(MainActivity.this,
-                        e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        presenter.cipher(message);
     }
 
     @NonNull
@@ -71,5 +58,17 @@ public class MainActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_TEXT, inputMessage);
         shareIntent.setType("text/plain");
         startActivity(shareIntent);
+    }
+
+    @Override
+    public void showResult(String result) {
+        setResult(result);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(MainActivity.this,
+                message,
+                Toast.LENGTH_SHORT).show();
     }
 }
