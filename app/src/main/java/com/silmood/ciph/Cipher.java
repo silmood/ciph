@@ -3,7 +3,7 @@ package com.silmood.ciph;
 
 public class Cipher {
 
-    public String rot13(String text) {
+    public static String rot13(String text) {
         char[] chars = text.toCharArray();
         StringBuilder result = new StringBuilder();
 

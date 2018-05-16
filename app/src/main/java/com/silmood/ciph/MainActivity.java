@@ -17,21 +17,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        findViewById(R.id.btn_cipher).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message  = getInputMessage();
+    private void setResult(String output) {
+        ((TextView) findViewById(R.id.label_output)).setText(output);
+    }
 
-                if (message.isEmpty()){
-                    ((EditText)findViewById(R.id.input_message)).setError(getString(R.string.error_empty));
-                } else {
-                    Cipher cipher = new Cipher();
-                    String output = cipher.rot13(message);
-                    ((TextView) findViewById(R.id.label_output)).setText(output);
-                }
-            }
-        });
+    public void cipher(View view) {
+        String message  = getInputMessage();
+
+        String result = Cipher.rot13(message);
+        setResult(result);
     }
 
     @NonNull
