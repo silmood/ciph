@@ -10,13 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CipherView{
+
+    CipherPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        presenter = new CipherPresenter(this, new RemoteDataSource());
     }
 
     private void setResult(String output) {
@@ -26,8 +31,27 @@ public class MainActivity extends AppCompatActivity {
     public void cipher(View view) {
         String message  = getInputMessage();
 
-        String result = Cipher.rot13(message);
+        if (message.isEmpty()) {
+            showInputError(getString(R.string.error_empty));
+        } else {
+            presenter.cipher(message);
+        }
+    }
+
+    @Override
+    public void showResult(String result) {
         setResult(result);
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private void showInputError(String error) {
+
+        ((EditText)findViewById(R.id.input_message)).setError(error);
     }
 
     @NonNull

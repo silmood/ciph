@@ -18,6 +18,24 @@ android {
         }
     }
 
+    flavorDimensions "default"
+
+    productFlavors {
+
+        prod {
+            dimension "default"
+        }
+
+        mock {
+            dimension "default"
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -30,8 +48,12 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.8.0'
+
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation 'org.mockito:mockito-core:2.7.22'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
