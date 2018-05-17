@@ -17,9 +17,6 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExt
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
 import static org.hamcrest.Matchers.allOf;
 
-/**
- * Created by silmood on 5/14/18.
- */
 
 @RunWith(AndroidJUnit4.class)
 public class IntentTest {
